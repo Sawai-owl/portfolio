@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNS運用代行 | そらなす Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f8f4ee;
+    --warm-white: #fdfaf6;
+    --sage: #7a9e87;
+    --sage-light: #a8c4b0;
+    --sage-dark: #4d7a60;
+    --blush: #e8c5b0;
+    --brown: #6b4f3a;
+    --charcoal: #2c2c2c;
+    --muted: #7a7068;
+    --border: #e0d8d0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--sage);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px;
+    position: relative;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    right: -60px;
+    top: 0;
+    width: 120px;
+    height: 100%;
+    background: var(--sage);
+    clip-path: polygon(0 0, 0% 100%, 100% 100%);
+    z-index: 2;
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--sage-light);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-name span {
+    display: block;
+    font-size: 0.5em;
+    font-weight: 400;
+    color: var(--sage-light);
+    letter-spacing: 0.1em;
+  }
+
+  .hero-desc {
+    color: rgba(255,255,255,0.85);
+    font-size: 15px;
+    line-height: 2;
+    max-width: 340px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: #fff;
+    color: var(--sage-dark);
+    padding: 14px 36px;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+  }
+
+  .btn-primary:hover {
+    background: transparent;
+    border-color: #fff;
+    color: #fff;
+  }
+
+  .hero-right {
+    background: var(--warm-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 60px 80px 100px;
+    position: relative;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .stat-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 0.8s forwards;
+  }
+
+  .stat-card:nth-child(1) { animation-delay: 0.5s; }
+  .stat-card:nth-child(2) { animation-delay: 0.65s; }
+  .stat-card:nth-child(3) { animation-delay: 0.8s; }
+  .stat-card:nth-child(4) { animation-delay: 0.95s; }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--sage);
+  }
+
+  .stat-num {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--sage-dark);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-num sup {
+    font-size: 16px;
+    vertical-align: super;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 100px 40px;
+  }
+
+  .section-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--sage);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-tag::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--sage);
+  }
+
+  .section-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(24px, 3.5vw, 38px);
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 48px;
+    color: var(--charcoal);
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--warm-white);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 20px;
+    font-size: 15px;
+  }
+
+  .profile-badge {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    padding: 32px;
+  }
+
+  .badge-title {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--sage);
+    margin-bottom: 20px;
+  }
+
+  .badge-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .badge-item:last-child { border-bottom: none; }
+
+  .badge-icon {
+    color: var(--sage);
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .badge-item strong {
+    display: block;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 2px;
+  }
+
+  .badge-item span {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* ── SERVICE ── */
+  .service {
+    background: var(--cream);
+  }
+
+  .service-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .service-card {
+    background: var(--warm-white);
+    padding: 40px 32px;
+    transition: background 0.3s;
+  }
+
+  .service-card:hover {
+    background: #fff;
+  }
+
+  .service-num {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 48px;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .service-name {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--charcoal);
+  }
+
+  .service-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+
+  .service-tag-list {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    background: var(--cream);
+    color: var(--sage-dark);
+    border: 1px solid var(--sage-light);
+    padding: 3px 10px;
+  }
+
+  /* ── WORKS ── */
+  .works {
+    background: var(--warm-white);
+  }
+
+  .works-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .work-card {
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .work-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  }
+
+  .work-header {
+    background: var(--sage);
+    padding: 32px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .work-header::before {
+    content: attr(data-icon);
+    position: absolute;
+    right: 20px;
+    bottom: -10px;
+    font-size: 80px;
+    opacity: 0.15;
+  }
+
+  .work-platform {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--sage-light);
+    margin-bottom: 8px;
+  }
+
+  .work-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .work-body {
+    padding: 28px 32px;
+    background: #fff;
+  }
+
+  .work-metrics {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .metric {
+    text-align: center;
+  }
+
+  .metric-val {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 24px;
+    color: var(--sage-dark);
+    font-weight: 600;
+  }
+
+  .metric-key {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .work-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+
+  /* ── STRENGTH ── */
+  .strength {
+    background: var(--sage-dark);
+    color: #fff;
+  }
+
+  .strength .section-tag { color: var(--sage-light); }
+  .strength .section-tag::after { background: var(--sage-light); }
+  .strength .section-title { color: #fff; }
+
+  .strength-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .strength-item {
+    background: var(--sage-dark);
+    padding: 40px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    transition: background 0.3s;
+  }
+
+  .strength-item:hover {
+    background: rgba(255,255,255,0.05);
+  }
+
+  .strength-num {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 36px;
+    color: var(--sage-light);
+    opacity: 0.5;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .strength-content h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .strength-content p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.9;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--cream);
+    text-align: center;
+    padding: 120px 40px;
+  }
+
+  .cta-section .section-tag {
+    justify-content: center;
+  }
+
+  .cta-section .section-tag::after { display: none; }
+
+  .cta-section .section-title {
+    margin-bottom: 24px;
+  }
+
+  .cta-sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 48px;
+  }
+
+  .btn-cta {
+    display: inline-block;
+    background: var(--sage-dark);
+    color: #fff;
+    padding: 18px 56px;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    margin: 8px;
+  }
+
+  .btn-cta:hover {
+    background: var(--charcoal);
+  }
+
+  .btn-cta.outline {
+    background: transparent;
+    border: 2px solid var(--sage-dark);
+    color: var(--sage-dark);
+    padding: 16px 54px;
+  }
+
+  .btn-cta.outline:hover {
+    background: var(--sage-dark);
+    color: #fff;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--charcoal);
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 32px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .hero-left {
+      padding: 60px 32px;
+    }
+
+    .hero-left::after { display: none; }
+
+    .hero-right {
+      padding: 48px 32px;
+    }
+
+    .hero-stats {
+      max-width: 100%;
+    }
+
+    .about-grid,
+    .works-grid,
+    .strength-list {
+      grid-template-columns: 1fr;
+    }
+
+    .service-cards {
+      grid-template-columns: 1fr;
+    }
+
+    section {
+      padding: 64px 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">SNS Management Portfolio</p>
+    <h1 class="hero-name">
+      そらなす
+      <span>Soranasu</span>
+    </h1>
+    <p class="hero-desc">
+      元救急看護師・新人看護師教育担当として積み上げた<br>
+      「伝える力」を武器に、あなたのSNSを<br>
+      フォロワーに信頼される場所に育てます。
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">お問い合わせはこちら</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num">●●●<sup>+</sup></div>
+        <div class="stat-label">Instagram フォロワー数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">●●<sup>ヶ月</sup></div>
+        <div class="stat-label">運用期間</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">●●<sup>本</sup></div>
+        <div class="stat-label">総投稿数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3<sup>年+</sup></div>
+        <div class="stat-label">看護師・教育経験</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="section-inner">
+    <p class="section-tag">About</p>
+    <h2 class="section-title">「わかりやすく伝える」が<br>得意なSNS運用者です</h2>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          元救急看護師として複数の病院で勤務後、新人看護師の育成・教育に携わってきました。「難しいことをやさしく伝える」スキルを軸に、看護師向けのInstagramやYouTubeチャンネルを自ら運営しています。
+        </p>
+        <p>
+          SNSは「発信する」だけでなく、フォロワーとの信頼関係を丁寧に育てることが大切だと実感しています。医療・教育という繊細な分野での発信経験から、誠実で継続性のある運用が強みです。
+        </p>
+        <p>
+          現在は個人起業家・フリーランスの方のInstagramアカウント運用代行を承っています。一緒に、ファンになってもらえるアカウントを育てましょう。
+        </p>
+      </div>
+
+      <div class="profile-badge">
+        <p class="badge-title">PROFILE</p>
+
+        <div class="badge-item">
+          <span class="badge-icon">✦</span>
+          <div>
+            <strong>ペンネーム</strong>
+            <span>そらなす（さわ）</span>
+          </div>
+        </div>
+        <div class="badge-item">
+          <span class="badge-icon">✦</span>
+          <div>
+            <strong>前職</strong>
+            <span>救急看護師 / 新人教育担当</span>
+          </div>
+        </div>
+        <div class="badge-item">
+          <span class="badge-icon">✦</span>
+          <div>
+            <strong>運営チャンネル</strong>
+            <span>Instagram / YouTube / ブログ（看護師教育・キャリア）</span>
+          </div>
+        </div>
+        <div class="badge-item">
+          <span class="badge-icon">✦</span>
+          <div>
+            <strong>コミュニティ</strong>
+            <span>リベシティ所属</span>
+          </div>
+        </div>
+        <div class="badge-item">
+          <span class="badge-icon">✦</span>
+          <div>
+            <strong>得意領域</strong>
+            <span>医療・教育・育児・ライフスタイル系</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE -->
+<section class="service">
+  <div class="section-inner">
+    <p class="section-tag">Service</p>
+    <h2 class="section-title">提供サービス</h2>
+
+    <div class="service-cards">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3 class="service-name">戦略設計・方向性決定</h3>
+        <p class="service-desc">
+          あなたのビジネスゴールとターゲット層を深くヒアリングし、誰に届けるか・どう届けるかの方針を明確にします。競合調査・ペルソナ設定も含めて伴走します。
+        </p>
+        <div class="service-tag-list">
+          <span class="tag">ヒアリング</span>
+          <span class="tag">ペルソナ設計</span>
+          <span class="tag">競合調査</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3 class="service-name">投稿コンテンツ制作</h3>
+        <p class="service-desc">
+          キャプション文章・投稿画像のデザイン・ハッシュタグ選定まで一括対応。「伝わる言葉」を選ぶ文章力が特に強みです。
+        </p>
+        <div class="service-tag-list">
+          <span class="tag">キャプション作成</span>
+          <span class="tag">画像デザイン</span>
+          <span class="tag">ハッシュタグ</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3 class="service-name">アカウント全体の運用代行</h3>
+        <p class="service-desc">
+          投稿スケジュール管理・分析・改善提案まで、アカウント運用を丸ごとお任せいただけます。月次レポートで数字の動きをわかりやすく共有します。
+        </p>
+        <div class="service-tag-list">
+          <span class="tag">スケジュール管理</span>
+          <span class="tag">インサイト分析</span>
+          <span class="tag">月次レポート</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section class="works">
+  <div class="section-inner">
+    <p class="section-tag">Works</p>
+    <h2 class="section-title">運用実績</h2>
+
+    <div class="works-grid">
+      <div class="work-card">
+        <div class="work-header" data-icon="📱">
+          <p class="work-platform">INSTAGRAM</p>
+          <h3 class="work-title">看護師向け教育アカウント<br>（自社運営）</h3>
+        </div>
+        <div class="work-body">
+          <div class="work-metrics">
+            <div class="metric">
+              <div class="metric-val">●●●+</div>
+              <div class="metric-key">フォロワー数</div>
+            </div>
+            <div class="metric">
+              <div class="metric-val">●●本</div>
+              <div class="metric-key">投稿数</div>
+            </div>
+            <div class="metric">
+              <div class="metric-val">●ヶ月</div>
+              <div class="metric-key">運用期間</div>
+            </div>
+          </div>
+          <p class="work-desc">
+            新人看護師の「知りたい・不安を解消したい」に応えるコンテンツを継続発信。専門的な内容をわかりやすいビジュアルと言葉で届け、フォロワーから「わかりやすくて助かった」というコメントを多数いただいています。
+          </p>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div class="work-header" data-icon="✍️" style="background: var(--brown);">
+          <p class="work-platform">BLOG / THREADS</p>
+          <h3 class="work-title">看護師キャリア応援<br>ブログ＆Threads運営</h3>
+        </div>
+        <div class="work-body">
+          <div class="work-metrics">
+            <div class="metric">
+              <div class="metric-val">複数</div>
+              <div class="metric-key">メディア展開</div>
+            </div>
+            <div class="metric">
+              <div class="metric-val">継続</div>
+              <div class="metric-key">更新中</div>
+            </div>
+          </div>
+          <p class="work-desc">
+            働くお母さん看護師向けに、SEOを意識したブログ記事を執筆。ラッコキーワードを活用したキーワード戦略、読者が求める情報の構成設計まで一貫して担当しています。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRENGTH -->
+<section class="strength">
+  <div class="section-inner">
+    <p class="section-tag">Strength</p>
+    <h2 class="section-title">選ばれる4つの理由</h2>
+
+    <div class="strength-list">
+      <div class="strength-item">
+        <div class="strength-num">01</div>
+        <div class="strength-content">
+          <h3>「伝える」プロとしての経験</h3>
+          <p>医療という命に関わる現場で、正確かつわかりやすく伝えてきた経験があります。曖昧な言葉を使わず、読んだ人に行動を起こさせる文章が書けます。</p>
+        </div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-num">02</div>
+        <div class="strength-content">
+          <h3>自分で運用してきた実践者</h3>
+          <p>教科書的なSNS知識ではなく、実際にアカウントを育ててきた当事者として話します。数字の読み方・伸び悩む時期の乗り越え方など、リアルな視点でサポートします。</p>
+        </div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-num">03</div>
+        <div class="strength-content">
+          <h3>共感を生むコンテンツ設計</h3>
+          <p>「わかる！」と思ってもらえる共感ベースの発信が得意です。フォロワーが思わず保存・シェアしたくなる投稿づくりを大切にしています。</p>
+        </div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-num">04</div>
+        <div class="strength-content">
+          <h3>丁寧なコミュニケーション</h3>
+          <p>月次レポートで進捗を共有し、疑問や変更にも迅速に対応します。「任せてよかった」と思っていただける誠実な運用を心がけています。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <p class="section-tag" style="justify-content:center;">Contact</p>
+  <h2 class="section-title">まずはお気軽にご相談ください</h2>
+  <p class="cta-sub">
+    運用の悩み・ゴール・予算など、どんな段階でもOKです。<br>
+    お話を聞かせていただくことから始めましょう。
+  </p>
+  <div>
+    <a href="https://www.instagram.com/【あなたのID】" class="btn-cta" target="_blank">Instagram DM で相談する</a>
+    <a href="#" class="btn-cta outline">公式LINEへ（任意）</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 そらなす（Soranasu）. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
